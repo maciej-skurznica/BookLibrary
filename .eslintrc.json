@@ -21,6 +21,9 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/resolver": {
       "typescript": {}
     }

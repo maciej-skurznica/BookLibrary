@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "format": "prettier --write . --config ./.prettierrc"
+    "format": "prettier --write . --config ./.prettierrc",
+    "lint:styles": "stylelint '**/*.{css,js,jsx,ts,tsx}'",
+    "lint:styles:fix": "stylelint '**/*.{css,js,jsx,ts,tsx}' --fix"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -28,7 +30,9 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss-styled-syntax": "^0.4.0",
     "prettier": "^2.8.7",
+    "stylelint": "^15.4.0",
     "typescript": "^4.9.3",
     "vite": "^4.2.0"
   }

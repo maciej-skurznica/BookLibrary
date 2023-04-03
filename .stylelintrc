@@ -1,9 +1,7 @@
 {
   "overrides": [
     {
-      "files": [
-        "**/*.{js,jsx,ts,tsx}"
-      ],
+      "files": ["**/*.{js,jsx,ts,tsx}"],
       "customSyntax": "postcss-styled-syntax"
     }
   ],
@@ -16,9 +14,7 @@
     "declaration-block-no-duplicate-properties": [
       true,
       {
-        "ignore": [
-          "consecutive-duplicates-with-different-values"
-        ]
+        "ignore": ["consecutive-duplicates-with-different-values"]
       }
     ],
     "declaration-block-no-shorthand-property-overrides": true,
@@ -41,9 +37,7 @@
     "selector-type-no-unknown": [
       true,
       {
-        "ignore": [
-          "custom-elements"
-        ]
+        "ignore": ["custom-elements"]
       }
     ],
     "string-no-newline": true,

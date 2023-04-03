@@ -20,7 +20,7 @@
       "eslint --fix",
       "stylelint --fix"
     ],
-    "*": "prettier --write"
+    "!*.{jpg}": "prettier --write"
   },
   "dependencies": {
     "@types/styled-components": "^5.1.26",

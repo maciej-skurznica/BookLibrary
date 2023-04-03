@@ -7,10 +7,6 @@ export const GlobalStyle = createGlobalStyle<{
     white: string;
     navy: string;
     lightNavy: string;
-    sidebarButtonGradient: {
-      from: string;
-      to: string;
-    };
   };
 }>`
   body {
@@ -19,5 +15,11 @@ export const GlobalStyle = createGlobalStyle<{
     display: flex;
     justify-content: center;
     background-color: ${({ theme }) => theme.bgGrey};
+    font-family: "Lato", sans-serif;
+  }
+
+  div {
+    display: flex;
+    box-sizing: border-box;
   }
 `;

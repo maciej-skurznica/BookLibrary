@@ -2,6 +2,7 @@ import { FunctionComponent } from "react";
 import NavigationSidebar from "src/components/NavigationSidebar";
 import profilePhoto from "src/assets/profile-photo.jpg";
 import {
+  Child,
   Container,
   MainCompartment,
   SidebarContainer,
@@ -26,7 +27,7 @@ const Sidebar: FunctionComponent<SidebarProps> = (props) => {
         <TopBanner>
           RAD<span>ICAL</span>
         </TopBanner>
-        {props.children}
+        <Child>{props.children}</Child>
       </MainCompartment>
     </Container>
   );

@@ -48,3 +48,9 @@ export const TopBanner = styled.div`
     color: #8b201d;
   }
 `;
+
+export const Child = styled.div`
+  max-width: calc(1440px - 81px);
+  width: calc(100vw - 81px);
+  height: calc(100% - 74px);
+`;

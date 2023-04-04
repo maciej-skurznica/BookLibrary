@@ -8,7 +8,7 @@ const navigationLinks = [
     icon: <ChartIcon />
   },
   {
-    path: "/favorites",
+    path: "/favourites",
     icon: <HeartIcon />
   },
   {

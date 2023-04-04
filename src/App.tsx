@@ -13,7 +13,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="bestsellers" element={<Bestsellers />} />
-            <Route path="/favorites" element={<Favourites />} />
+            <Route path="/favourites" element={<Favourites />} />
           </Routes>
         </Sidebar>
       </BrowserRouter>

@@ -35,3 +35,15 @@ export const StyledLink = styled(Link)`
 export const PhotoTiles = styled.div`
   gap: 43px;
 `;
+
+export const StyledImg = styled.img`
+  width: calc((100% - (43px * 2)) / 3);
+  aspect-ratio: 1.61 / 1;
+`;
+
+export const SkeletonBox = styled.div`
+  width: calc((100% - (43px * 2)) / 3);
+  aspect-ratio: 1.61 / 1;
+  display: block;
+  line-height: 0;
+`;

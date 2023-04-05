@@ -15,7 +15,7 @@ export const Title = styled.div`
   margin-bottom: 50px;
 `;
 
-export const List = styled.div`
+export const ListContainer = styled.div`
   flex-direction: column;
   margin: 37px 11.55% 12px 0;
   gap: 17px;

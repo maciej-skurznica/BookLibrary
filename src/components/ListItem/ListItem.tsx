@@ -1,5 +1,6 @@
 import BookIcon from "src/assets/BookIcon";
 import HeartIcon from "src/assets/HeartIcon";
+import { ListItemProps } from "./ListItem.interfaces";
 import Rating from "src/components/Rating";
 import {
   Container,
@@ -9,20 +10,23 @@ import {
   TitleText
 } from "./ListItem.styles";
 
-const ListItem = () => {
-  const author = "Stephen King";
-
+const ListItem = ({
+  book: { title, author, price, rating, bookLink, isFavorite }
+}: ListItemProps) => {
   return (
     <Container>
       <IconDiv>
         <BookIcon />
       </IconDiv>
       <TitleText>
-        BILLY SUMMERS<span>by {author}</span>
+        <a href={bookLink} target="_blank" rel="noreferrer">
+          {title}
+          <span>by {author}</span>
+        </a>
       </TitleText>
-      <Rating rating={4} />
-      <Text>8 GPB</Text>
-      <FavButton isFav={true}>
+      <Rating rating={rating} />
+      <Text>{`${price} GBP`}</Text>
+      <FavButton isFav={isFavorite}>
         <HeartIcon />
       </FavButton>
     </Container>

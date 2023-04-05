@@ -23,7 +23,9 @@ export const Text = styled.div`
   font-size: 16px;
   line-height: 20px;
   color: ${({ theme }) => theme.navy};
-  margin: 0 5.57% 0 5.2%;
+  margin: 0 5.57% 0 0;
+  width: 10.6%;
+  justify-content: flex-end;
 
   span {
     font-weight: 400;
@@ -33,7 +35,13 @@ export const Text = styled.div`
 
 export const TitleText = styled(Text)`
   flex-grow: 1;
+  justify-content: flex-start;
   margin: 0;
+
+  a {
+    color: ${({ theme }) => theme.navy};
+    text-decoration: none;
+  }
 `;
 
 export const FavButton = styled(IconDiv)<{ isFav: boolean }>`

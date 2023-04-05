@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -39,10 +40,15 @@ export const TopBanner = styled.div`
   background: ${({ theme }) => theme.white};
   height: 74px;
   justify-content: flex-start;
-  padding: 19px 0 0 43px;
+  padding: 19px 0 19px 43px;
+`;
+
+export const StyledLink = styled(Link)`
   font-weight: 800;
   font-size: 23px;
   line-height: 150%;
+  text-decoration: none;
+  color: ${({ theme }) => theme.navy};
 
   span {
     color: #8b201d;

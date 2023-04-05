@@ -5,9 +5,15 @@ import { FunctionComponent, useState } from "react";
 
 interface SearchBarProps {
   placeholder: string;
+  notFound?: boolean;
+  handleSearch?: (value: string) => void;
 }
 
-const SearchBar: FunctionComponent<SearchBarProps> = (props) => {
+const SearchBar: FunctionComponent<SearchBarProps> = ({
+  placeholder,
+  notFound,
+  handleSearch
+}) => {
   const [value, setValue] = useState<string>("");
   const [valid, setValid] = useState<boolean>(true);
   const navigate = useNavigate();
@@ -22,6 +28,7 @@ const SearchBar: FunctionComponent<SearchBarProps> = (props) => {
     navigate("/bestsellers", { state: { searchTerm: value } });
     setValue("");
     setValid(true);
+    if (handleSearch) handleSearch(value);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +44,11 @@ const SearchBar: FunctionComponent<SearchBarProps> = (props) => {
         <Input
           type="text"
           placeholder={
-            valid ? props.placeholder : "Please enter at least 3 characters"
+            valid
+              ? notFound
+                ? "Nothing found"
+                : placeholder
+              : "Please enter at least 3 characters"
           }
           value={value}
           onChange={handleChange}

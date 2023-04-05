@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <ThemeProvider theme={primaryTheme}>
-      <SkeletonTheme baseColor={"#E9E9E8"} highlightColor={"#FEFFFE"}>
+      <SkeletonTheme baseColor={"#E5E5E5"} highlightColor={"#E9EDF6"}>
         <BrowserRouter>
           <GlobalStyle />
           <Sidebar>

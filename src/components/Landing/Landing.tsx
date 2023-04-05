@@ -79,7 +79,7 @@ const Landing = () => {
                   .fill(0)
                   .map((_, i) => (
                     <SkeletonBox key={i}>
-                      <Skeleton borderRadius={8} height={"100%"} duration={3} />
+                      <Skeleton borderRadius={8} height={"100%"} />
                     </SkeletonBox>
                   ))}
           </PhotoTiles>

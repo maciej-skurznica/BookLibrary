@@ -6,6 +6,7 @@ import {
   Container,
   MainCompartment,
   SidebarContainer,
+  StyledLink,
   TopBanner,
   User
 } from "./Sidebar.styles";
@@ -25,7 +26,9 @@ const Sidebar: FunctionComponent<SidebarProps> = (props) => {
       </SidebarContainer>
       <MainCompartment>
         <TopBanner>
-          RAD<span>ICAL</span>
+          <StyledLink to="/">
+            RAD<span>ICAL</span>
+          </StyledLink>
         </TopBanner>
         <Child>{props.children}</Child>
       </MainCompartment>

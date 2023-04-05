@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   align-items: center;
-  padding-right: 124px;
+  padding-right: 11.55%;
 `;
 
 export const Form = styled.form`

@@ -5,7 +5,7 @@ export const NavigationContainer = styled.div`
   background: ${({ theme }) => theme.navy};
   height: calc(100% - 74px);
   width: 100%;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 `;
 
@@ -14,8 +14,8 @@ export const Links = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  margin-bottom: 85px;
   position: relative;
+  margin-top: calc(100vh * 0.3);
 `;
 
 export const LinkTile = styled.div`

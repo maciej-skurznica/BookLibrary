@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   max-width: 1440px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   background-color: ${({ theme }) => theme.lightNavy};
 `;

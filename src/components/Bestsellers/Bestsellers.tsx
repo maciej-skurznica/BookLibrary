@@ -1,6 +1,7 @@
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import ListItem from "src/components/ListItem";
+import randNumAsStr from "src/utils/randNumAsStr";
 import randomNumber from "src/utils/randomNumber";
 import SearchBar from "src/components/SearchBar";
 import Skeleton from "react-loading-skeleton";
@@ -53,10 +54,7 @@ const Bestsellers = () => {
                   {
                     title,
                     author,
-                    price:
-                      price === "0.00"
-                        ? randomNumber(2, 18, 2)
-                        : parseFloat(price),
+                    price: price === "0.00" ? randNumAsStr(2, 18, 2) : price,
                     rating: randomNumber(3, 5, 0),
                     bookImage: book_image,
                     bookLink: amazon_product_url,
@@ -105,7 +103,6 @@ const Bestsellers = () => {
 
   return (
     <Container>
-      <div>{location.state?.searchTerm}</div>
       <Title>New York Times Bestsellers</Title>
       <SearchBar
         placeholder="Search"

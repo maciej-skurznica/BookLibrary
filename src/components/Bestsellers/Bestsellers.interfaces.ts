@@ -1,7 +1,7 @@
 export interface Book {
   title: string;
   author: string;
-  price: number;
+  price: string;
   rating: number;
   bookImage: string;
   bookLink: string;

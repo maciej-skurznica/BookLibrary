@@ -25,7 +25,7 @@ const ListItem = ({ book, handleClick, insideFav }: ListItemProps) => {
       <>
         <Price>{`${book.price} GBP`}</Price>
         <Rating rating={book.rating} />
-        <StyledLink to="/">Edit</StyledLink>
+        <StyledLink to={`/favourites/${book.title}`}>Edit</StyledLink>
         <Button onClick={() => handleClick(book)}>Delete</Button>
       </>
     )

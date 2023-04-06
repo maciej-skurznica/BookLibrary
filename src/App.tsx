@@ -4,7 +4,13 @@ import { primaryTheme } from "src/styles/themes";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { ThemeProvider } from "styled-components";
 import useLocalStorageAndState from "./hooks/useLocalStorageAndState";
-import { Bestsellers, Favourites, Landing, Sidebar } from "src/components";
+import {
+  Bestsellers,
+  Favourites,
+  Landing,
+  Sidebar,
+  UpdateBook
+} from "src/components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -20,6 +26,13 @@ function App() {
         ? [...favourites, { ...book, isFavorite: !book.isFavorite }]
         : [...favourites].filter((el) => el.title !== book.title)
     );
+  };
+
+  const handleFavUpdate = (book: Book) => {
+    const updated = [...favourites].map((el) =>
+      el.title === book.title ? { ...el, ...book } : el
+    );
+    setFavourites(updated);
   };
 
   return (
@@ -45,6 +58,15 @@ function App() {
                   <Favourites
                     handleClick={handleFavourites}
                     favourites={favourites}
+                  />
+                }
+              />
+              <Route
+                path="/favourites/:title"
+                element={
+                  <UpdateBook
+                    favourites={favourites}
+                    handleFavUpdate={handleFavUpdate}
                   />
                 }
               />

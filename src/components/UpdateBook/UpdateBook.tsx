@@ -1,8 +1,12 @@
 import ArrowIcon from "src/assets/ArrowIcon";
+import { Book } from "../Bestsellers/Bestsellers.interfaces";
+import Rating from "src/components/Rating/Rating";
 import { UpdateBookProps } from "./UpdateBook.interfaces";
+import { useState } from "react";
 import {
   Button,
   Container,
+  Div,
   EditForm,
   EditTitle,
   Image,
@@ -12,10 +16,22 @@ import {
 } from "./UpdateBook.styles";
 import { useNavigate, useParams } from "react-router-dom";
 
-const UpdateBook = ({ favourites }: UpdateBookProps) => {
+const UpdateBook = ({ favourites, handleFavUpdate }: UpdateBookProps) => {
   const { title } = useParams();
   const book = favourites.find((el) => el.title === title);
+  const [rating, setRating] = useState<number>(book?.rating || 0);
+  const [price, setPrice] = useState<string>(book?.price || "");
   const navigate = useNavigate();
+
+  const handleRating = (rating: number) => setRating(rating);
+
+  const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPrice(Number(e.target.value).toFixed(2));
+  };
+
+  const handleSubmit = () => {
+    handleFavUpdate({ ...book, rating, price } as Book);
+  };
 
   return (
     <Container>
@@ -28,13 +44,21 @@ const UpdateBook = ({ favourites }: UpdateBookProps) => {
       <EditForm>
         <div>
           <Label>Cost</Label>
-          <Input type="text" />
+          <Input
+            type="number"
+            placeholder={`${book?.price} GBP`}
+            max={25}
+            min={0}
+            onChange={handleCostChange}
+          />
         </div>
         <div>
           <Label>Rating</Label>
-          <Input type="text" />
+          <Div>
+            <Rating rating={rating} handleRating={handleRating} />
+          </Div>
         </div>
-        <Button type="submit">UPDATE</Button>
+        <Button onClick={handleSubmit}>UPDATE</Button>
       </EditForm>
       <ReturnButton onClick={() => navigate("/favourites")}>
         <ArrowIcon />

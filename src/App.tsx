@@ -28,6 +28,13 @@ function App() {
     );
   };
 
+  const handleFavUpdate = (book: Book) => {
+    const updated = [...favourites].map((el) =>
+      el.title === book.title ? { ...el, ...book } : el
+    );
+    setFavourites(updated);
+  };
+
   return (
     <ThemeProvider theme={primaryTheme}>
       <SkeletonTheme baseColor={"#E5E5E5"} highlightColor={"#E9EDF6"}>
@@ -56,7 +63,12 @@ function App() {
               />
               <Route
                 path="/favourites/:title"
-                element={<UpdateBook favourites={favourites} />}
+                element={
+                  <UpdateBook
+                    favourites={favourites}
+                    handleFavUpdate={handleFavUpdate}
+                  />
+                }
               />
             </Routes>
           </Sidebar>

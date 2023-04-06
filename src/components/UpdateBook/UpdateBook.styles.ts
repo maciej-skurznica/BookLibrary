@@ -24,7 +24,7 @@ export const Image = styled.div`
     align-items: center;
     font-weight: 700;
     font-size: 43px;
-    line-height: 20px;
+    line-height: 40px;
     color: ${({ theme }) => theme.white};
     background: rgba(68, 68, 68, 0.7);
   }
@@ -38,7 +38,7 @@ export const EditTitle = styled.div`
   margin: 52px 0 41px;
 `;
 
-export const EditForm = styled.form`
+export const EditForm = styled.div`
   flex-direction: column;
   width: 47.74%;
 `;
@@ -65,8 +65,16 @@ export const Input = styled.input`
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
-  height: 20px;
+  height: 52px;
   outline: none;
+  box-sizing: border-box;
+`;
+
+export const Div = styled.div`
+  width: calc(100% - 23.19%);
+  padding: 16px 0 16px 25px;
+  height: 52px;
+  background: ${({ theme }) => theme.white};
 `;
 
 export const Button = styled.button`
@@ -80,10 +88,11 @@ export const Button = styled.button`
   line-height: 20px;
   color: ${({ theme }) => theme.white};
   margin-bottom: 75px;
+  cursor: pointer;
 `;
 
 export const ReturnButton = styled.button`
-  width: 25%;
+  width: 220px;
   display: flex;
   border: none;
   background: none;

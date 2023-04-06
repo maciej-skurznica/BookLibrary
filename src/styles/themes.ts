@@ -5,3 +5,11 @@ export const primaryTheme = {
   navy: "#454664",
   lightNavy: "#E9EDF6"
 };
+
+export const darkTheme = {
+  bgGrey: "#2B2F39",
+  teal: "#93B4BC",
+  white: "#dbdbdb",
+  navy: "#454664",
+  lightNavy: "#E9EDF6"
+};

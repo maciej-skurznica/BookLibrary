@@ -68,6 +68,7 @@ export const Input = styled.input`
   height: 52px;
   outline: none;
   box-sizing: border-box;
+  background: ${({ theme }) => theme.white};
 `;
 
 export const Div = styled.div`

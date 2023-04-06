@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const useLocalStorageAndState = (
   key: string,
-  initialValue: string | Book[]
+  initialValue: string | Book[] | boolean
 ) => {
   const storedValue = window.localStorage.getItem(key);
   const item = storedValue ? JSON.parse(storedValue) : initialValue;

@@ -7,3 +7,4 @@ export { default as Bestsellers } from "./Bestsellers";
 export { default as ListItem } from "./ListItem";
 export { default as Rating } from "./Rating";
 export { default as UpdateBook } from "./UpdateBook";
+export { default as Settings } from "./Settings";

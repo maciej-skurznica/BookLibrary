@@ -1,6 +1,6 @@
 import { Book } from "./components/Bestsellers/Bestsellers.interfaces";
 import { GlobalStyle } from "src/styles/global";
-import { primaryTheme } from "src/styles/themes";
+import Settings from "./components/Settings/Settings";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { ThemeProvider } from "styled-components";
 import useLocalStorageAndState from "./hooks/useLocalStorageAndState";
@@ -12,8 +12,10 @@ import {
   UpdateBook
 } from "src/components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { darkTheme, primaryTheme } from "src/styles/themes";
 
 function App() {
+  const [theme, setTheme] = useLocalStorageAndState("theme", false);
   const [favourites, setFavourites] = useLocalStorageAndState(
     "favourites",
     [] as Book[]
@@ -35,8 +37,10 @@ function App() {
     setFavourites(updated);
   };
 
+  const handleTheme = () => setTheme(!theme);
+
   return (
-    <ThemeProvider theme={primaryTheme}>
+    <ThemeProvider theme={theme ? darkTheme : primaryTheme}>
       <SkeletonTheme baseColor={"#E5E5E5"} highlightColor={"#E9EDF6"}>
         <BrowserRouter>
           <GlobalStyle />
@@ -69,6 +73,10 @@ function App() {
                     handleFavUpdate={handleFavUpdate}
                   />
                 }
+              />
+              <Route
+                path="/settings"
+                element={<Settings handleTheme={handleTheme} theme={theme} />}
               />
             </Routes>
           </Sidebar>

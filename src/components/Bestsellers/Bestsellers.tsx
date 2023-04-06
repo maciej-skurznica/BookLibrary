@@ -5,6 +5,7 @@ import randNumAsStr from "src/utils/randNumAsStr";
 import randomNumber from "src/utils/randomNumber";
 import SearchBar from "src/components/SearchBar";
 import Skeleton from "react-loading-skeleton";
+import useLocalStorageAndState from "src/hooks/useLocalStorageAndState";
 import { useLocation } from "react-router-dom";
 import {
   BestsellersProps,
@@ -20,7 +21,10 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
-  const [locationKey, setLocationKey] = useState<string>("");
+  const [locationKey, setLocationKey] = useLocalStorageAndState(
+    "locationKey",
+    ""
+  );
   const location = useLocation();
   const apiKey = import.meta.env.VITE_NYT_API_KEY;
 
@@ -99,7 +103,6 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   }, []);
 
   useEffect(() => {
-    console.log("useEffect", location.key, locationKey);
     if (location.key !== locationKey) {
       setSearchTerm(location.state?.searchTerm ?? "");
       setLocationKey(location.key ?? "");
@@ -126,7 +129,6 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   return (
     <Container>
       <Title>New York Times Bestsellers</Title>
-      {console.log(searchTerm, location.key)}
       <SearchBar
         placeholder="Search"
         handleSearch={handleSearch}

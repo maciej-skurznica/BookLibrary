@@ -15,7 +15,7 @@ export const Links = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  margin-top: calc(100vh * 0.3);
+  margin-top: calc(100vh * 0.28);
 `;
 
 export const LinkTile = styled.div`

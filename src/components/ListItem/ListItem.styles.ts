@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -23,9 +24,8 @@ export const Text = styled.div`
   font-size: 16px;
   line-height: 20px;
   color: ${({ theme }) => theme.navy};
-  margin: 0 5.57% 0 0;
-  width: 10.6%;
-  justify-content: flex-end;
+  width: 16.17%;
+  justify-content: center;
 
   span {
     font-weight: 400;
@@ -42,6 +42,30 @@ export const TitleText = styled(Text)`
     color: ${({ theme }) => theme.navy};
     text-decoration: none;
   }
+`;
+
+export const Price = styled(Text)`
+  width: 12.5%;
+  justify-content: flex-start;
+`;
+
+export const Button = styled.button`
+  font-weight: 400;
+  font-size: 16px;
+  color: #5b5b5b;
+  border: none;
+  background: none;
+  padding: 0 3%;
+  cursor: pointer;
+`;
+
+export const StyledLink = styled(Link)`
+  font-weight: 400;
+  font-size: 16px;
+  color: #5b5b5b;
+  padding-left: 3%;
+  text-decoration: none;
+  line-height: 18px;
 `;
 
 export const FavButton = styled(IconDiv)<{ isFav: boolean }>`

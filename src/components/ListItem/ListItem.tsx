@@ -3,30 +3,47 @@ import HeartIcon from "src/assets/HeartIcon";
 import { ListItemProps } from "./ListItem.interfaces";
 import Rating from "src/components/Rating";
 import {
+  Button,
   Container,
   FavButton,
   IconDiv,
+  Price,
+  StyledLink,
   Text,
   TitleText
 } from "./ListItem.styles";
 
-const ListItem = ({
-  book: { title, author, price, rating, bookLink, isFavorite }
-}: ListItemProps) => {
+const ListItem = ({ book, handleClick, insideFav }: ListItemProps) => {
+  const elements = {
+    default: (
+      <>
+        <Rating rating={book.rating} />
+        <Text>{`${book.price} GBP`}</Text>
+      </>
+    ),
+    fav: (
+      <>
+        <Price>{`${book.price} GBP`}</Price>
+        <Rating rating={book.rating} />
+        <StyledLink to="/">Edit</StyledLink>
+        <Button onClick={() => handleClick(book)}>Delete</Button>
+      </>
+    )
+  };
+
   return (
     <Container>
       <IconDiv>
         <BookIcon />
       </IconDiv>
       <TitleText>
-        <a href={bookLink} target="_blank" rel="noreferrer">
-          {title}
-          <span>by {author}</span>
+        <a href={book.bookLink} target="_blank" rel="noreferrer">
+          {book.title}
+          <span>by {book.author}</span>
         </a>
       </TitleText>
-      <Rating rating={rating} />
-      <Text>{`${price} GBP`}</Text>
-      <FavButton isFav={isFavorite}>
+      {insideFav ? elements.fav : elements.default}
+      <FavButton isFav={book.isFavorite} onClick={() => handleClick(book)}>
         <HeartIcon />
       </FavButton>
     </Container>

@@ -1,9 +1,6 @@
+import { RatingProps } from "./Rating.interfaces";
 import StarIcon from "src/assets/StarIcon";
 import { Container, OuterDiv } from "./Rating.styles";
-
-interface RatingProps {
-  rating: number;
-}
 
 const Rating = ({ rating }: RatingProps) => {
   return (

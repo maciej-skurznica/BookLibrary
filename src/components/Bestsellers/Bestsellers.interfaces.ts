@@ -5,7 +5,6 @@ export interface Book {
   rating: number;
   bookImage: string;
   bookLink: string;
-  isEdited: boolean;
   isFavorite: boolean;
 }
 
@@ -19,4 +18,9 @@ export interface BookList {
   price: string;
   book_image: string;
   amazon_product_url: string;
+}
+
+export interface BestsellersProps {
+  handleClick: (book: Book) => void;
+  favourites: Book[];
 }

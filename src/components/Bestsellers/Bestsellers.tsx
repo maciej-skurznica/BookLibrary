@@ -5,26 +5,37 @@ import randNumAsStr from "src/utils/randNumAsStr";
 import randomNumber from "src/utils/randomNumber";
 import SearchBar from "src/components/SearchBar";
 import Skeleton from "react-loading-skeleton";
+import useLocalStorageAndState from "src/hooks/useLocalStorageAndState";
 import { useLocation } from "react-router-dom";
-import { Book, BookList, List } from "./Bestsellers.interfaces";
+import {
+  BestsellersProps,
+  Book,
+  BookList,
+  List
+} from "./Bestsellers.interfaces";
 import { Container, ListContainer, Title } from "./Bestsellers.styles";
 import { useEffect, useState } from "react";
 
-const Bestsellers = () => {
+const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
+  const [locationKey, setLocationKey] = useLocalStorageAndState(
+    "locationKey",
+    ""
+  );
   const location = useLocation();
   const apiKey = import.meta.env.VITE_NYT_API_KEY;
 
-  const handleSearch = (value: string) => {
-    const notFound =
-      books.filter((book) => book.title.toLowerCase().includes(value))
-        .length === 0;
-    setNotFound(notFound);
-    setSearchTerm(value);
+  const matchWithFavorites = (arr: Book[], favArr: Book[]) => {
+    return arr.reduce((acc: Book[], book: Book) => {
+      const match = favArr.find((el) => el.title === book.title);
+      return [...acc, match ?? { ...book, isFavorite: false }];
+    }, []);
   };
+
+  const handleSearch = (value: string) => setSearchTerm(value);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +43,7 @@ const Bestsellers = () => {
         const { data, status } = await axios(
           `https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${apiKey}`
         );
+
         if (status !== 200) {
           throw new Error("Error fetching data");
         }
@@ -58,7 +70,6 @@ const Bestsellers = () => {
                     rating: randomNumber(3, 5, 0),
                     bookImage: book_image,
                     bookLink: amazon_product_url,
-                    isEdited: false,
                     isFavorite: false
                   }
                 ];
@@ -69,6 +80,7 @@ const Bestsellers = () => {
           },
           []
         );
+
         const removedDuplicates = reducedData.reduce(
           (acc: Book[], el: Book) => {
             if (!acc.find((item) => item.title === el.title)) {
@@ -78,28 +90,40 @@ const Bestsellers = () => {
           },
           []
         );
-        setBooks(removedDuplicates);
+
+        setBooks(matchWithFavorites(removedDuplicates, favourites));
       } catch (error) {
         console.log(error);
       }
     };
+
+    setSearchTerm("");
     fetchData();
   }, []);
 
   useEffect(() => {
-    setSearchTerm(location.state?.searchTerm ?? "");
+    if (location.key !== locationKey) {
+      setSearchTerm(location.state?.searchTerm ?? "");
+      setLocationKey(location.key ?? "");
+    }
   }, [books]);
 
   useEffect(() => {
-    if (searchTerm.length) {
+    if (searchTerm.length && books.length) {
       const filteredBooks = books.filter((book) =>
         book.title.toLowerCase().includes(searchTerm)
       );
-      setFilteredBooks(filteredBooks);
+      const notFound = filteredBooks.length === 0;
+      setNotFound(notFound);
+      setFilteredBooks(matchWithFavorites(filteredBooks, favourites));
     } else {
       setFilteredBooks(books);
     }
   }, [books, searchTerm]);
+
+  useEffect(() => {
+    setFilteredBooks(matchWithFavorites(filteredBooks, favourites));
+  }, [favourites]);
 
   return (
     <Container>
@@ -110,10 +134,12 @@ const Bestsellers = () => {
         notFound={notFound}
       />
       <ListContainer>
-        {filteredBooks.length === 0 ? (
+        {notFound ? (
           <></>
         ) : filteredBooks.length ? (
-          filteredBooks.map((book) => <ListItem key={book.title} book={book} />)
+          filteredBooks.map((book) => (
+            <ListItem key={book.title} book={book} handleClick={handleClick} />
+          ))
         ) : (
           Array.from({ length: 10 }).map((_, i) => (
             <Skeleton key={i} height={"52px"} />

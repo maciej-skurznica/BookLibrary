@@ -1,7 +1,6 @@
 import { Book } from "src/components/Bestsellers/Bestsellers.interfaces";
 
-export interface ListItemProps {
-  book: Book;
-  insideFav?: boolean;
+export interface FavouritesProps {
+  favourites: Book[];
   handleClick: (book: Book) => void;
 }

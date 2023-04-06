@@ -1,13 +1,8 @@
 import Magnifier from "src/assets/Magnifier";
-import { useNavigate } from "react-router-dom";
+import { SearchBarProps } from "./SearchBar.interfaces";
 import { Button, Container, Form, IconDiv, Input } from "./SearchBar.styles";
 import { FunctionComponent, useState } from "react";
-
-interface SearchBarProps {
-  placeholder: string;
-  notFound?: boolean;
-  handleSearch?: (value: string) => void;
-}
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SearchBar: FunctionComponent<SearchBarProps> = ({
   placeholder,
@@ -17,6 +12,7 @@ const SearchBar: FunctionComponent<SearchBarProps> = ({
   const [value, setValue] = useState<string>("");
   const [valid, setValid] = useState<boolean>(true);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,7 +21,9 @@ const SearchBar: FunctionComponent<SearchBarProps> = ({
       setValid(false);
       return;
     }
-    navigate("/bestsellers", { state: { searchTerm: value } });
+    if (location.pathname === "/") {
+      navigate("/bestsellers", { state: { searchTerm: value } });
+    }
     setValue("");
     setValid(true);
     if (handleSearch) handleSearch(value);
@@ -46,7 +44,7 @@ const SearchBar: FunctionComponent<SearchBarProps> = ({
           placeholder={
             valid
               ? notFound
-                ? "Nothing found"
+                ? "Not found"
                 : placeholder
               : "Please enter at least 3 characters"
           }

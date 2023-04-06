@@ -23,9 +23,8 @@ export const Text = styled.div`
   font-size: 16px;
   line-height: 20px;
   color: ${({ theme }) => theme.navy};
-  margin: 0 5.57% 0 0;
-  width: 10.6%;
-  justify-content: flex-end;
+  width: 16.17%;
+  justify-content: center;
 
   span {
     font-weight: 400;

@@ -20,3 +20,8 @@ export interface BookList {
   book_image: string;
   amazon_product_url: string;
 }
+
+export interface BestsellersProps {
+  handleClick: (book: Book) => void;
+  favourites: Book[];
+}

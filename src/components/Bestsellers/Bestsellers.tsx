@@ -116,7 +116,7 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
       );
       const notFound = filteredBooks.length === 0;
       setNotFound(notFound);
-      setFilteredBooks(filteredBooks);
+      setFilteredBooks(matchWithFavorites(filteredBooks, favourites));
     } else {
       setFilteredBooks(books);
     }

@@ -70,7 +70,6 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
                     rating: randomNumber(3, 5, 0),
                     bookImage: book_image,
                     bookLink: amazon_product_url,
-                    isEdited: false,
                     isFavorite: false
                   }
                 ];

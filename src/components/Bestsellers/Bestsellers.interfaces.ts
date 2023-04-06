@@ -5,7 +5,6 @@ export interface Book {
   rating: number;
   bookImage: string;
   bookLink: string;
-  isEdited: boolean;
   isFavorite: boolean;
 }
 

@@ -39,7 +39,15 @@ function App() {
                   />
                 }
               />
-              <Route path="/favourites" element={<Favourites />} />
+              <Route
+                path="/favourites"
+                element={
+                  <Favourites
+                    handleClick={handleFavourites}
+                    favourites={favourites}
+                  />
+                }
+              />
             </Routes>
           </Sidebar>
         </BrowserRouter>

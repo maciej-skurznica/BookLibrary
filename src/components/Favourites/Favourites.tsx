@@ -48,7 +48,12 @@ const Favourites = ({ favourites, handleClick }: FavouritesProps) => {
           <></>
         ) : filteredFav.length ? (
           filteredFav.map((book) => (
-            <ListItem key={book.title} book={book} handleClick={handleClick} />
+            <ListItem
+              key={book.title}
+              book={book}
+              handleClick={handleClick}
+              insideFav
+            />
           ))
         ) : (
           <Empty>Go to Bestsellers and choose favourite books</Empty>

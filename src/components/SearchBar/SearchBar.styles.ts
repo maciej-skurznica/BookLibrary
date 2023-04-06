@@ -56,4 +56,21 @@ export const Button = styled.button`
   line-height: 20px;
   width: 58.63px;
   padding-right: 7px;
+  cursor: pointer;
+`;
+
+export const ResetButton = styled(Button)`
+  border-radius: 0;
+  padding: 0;
+  background: ${({ theme }) => theme.bgGrey};
+  padding-top: 2px;
+
+  svg {
+    height: 30px;
+    width: 30px;
+  }
+
+  path {
+    fill: ${({ theme }) => theme.teal};
+  }
 `;

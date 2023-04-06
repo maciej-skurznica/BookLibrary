@@ -17,11 +17,13 @@ const Favourites = ({ favourites, handleClick }: FavouritesProps) => {
 
   const handleSearch = (value: string) => setSearchTerm(value);
 
+  const handleReset = () => {
+    setSearchTerm("");
+    setNotFound(false);
+  };
+
   useEffect(() => {
-    if (searchTerm.length && notFound) {
-      setNotFound(false);
-      setSearchTerm("");
-    } else if (searchTerm.length && favourites.length) {
+    if (searchTerm.length && favourites.length) {
       const filtered = favourites.filter((book) =>
         book.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -30,7 +32,7 @@ const Favourites = ({ favourites, handleClick }: FavouritesProps) => {
     } else {
       setFilteredFav(favourites);
     }
-  }, [searchTerm, favourites, notFound]);
+  }, [searchTerm, favourites]);
 
   return (
     <Container>
@@ -39,6 +41,7 @@ const Favourites = ({ favourites, handleClick }: FavouritesProps) => {
         placeholder="Search"
         handleSearch={handleSearch}
         notFound={notFound}
+        handleReset={handleReset}
       />
       <ListContainer>
         {notFound ? (

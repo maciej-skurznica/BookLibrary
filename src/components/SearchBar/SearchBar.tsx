@@ -1,13 +1,22 @@
 import Magnifier from "src/assets/Magnifier";
+import RestartIcon from "src/assets/RestartIcon";
 import { SearchBarProps } from "./SearchBar.interfaces";
-import { Button, Container, Form, IconDiv, Input } from "./SearchBar.styles";
+import {
+  Button,
+  Container,
+  Form,
+  IconDiv,
+  Input,
+  ResetButton
+} from "./SearchBar.styles";
 import { FunctionComponent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const SearchBar: FunctionComponent<SearchBarProps> = ({
   placeholder,
   notFound,
-  handleSearch
+  handleSearch,
+  handleReset
 }) => {
   const [value, setValue] = useState<string>("");
   const [valid, setValid] = useState<boolean>(true);
@@ -52,6 +61,11 @@ const SearchBar: FunctionComponent<SearchBarProps> = ({
           onChange={handleChange}
           valid={valid}
         />
+        {handleReset && (
+          <ResetButton onClick={handleReset} type="reset">
+            <RestartIcon />
+          </ResetButton>
+        )}
         <Button type="submit">GO</Button>
       </Form>
     </Container>

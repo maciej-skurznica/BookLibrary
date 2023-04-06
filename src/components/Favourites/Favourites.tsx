@@ -22,6 +22,7 @@ const Favourites = ({ favourites, handleClick }: FavouritesProps) => {
     setNotFound(false);
   };
 
+  // A function that filters the favourites array based on the search term
   useEffect(() => {
     if (searchTerm.length && favourites.length) {
       const filtered = favourites.filter((book) =>

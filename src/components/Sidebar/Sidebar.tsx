@@ -15,6 +15,8 @@ interface SidebarProps {
   children: React.ReactNode;
 }
 
+// A component that is used to wrap all other pages components in the app
+// This component is always rendered
 const Sidebar: FunctionComponent<SidebarProps> = (props) => {
   return (
     <Container>

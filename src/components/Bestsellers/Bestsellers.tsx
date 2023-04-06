@@ -16,6 +16,9 @@ import {
 import { Container, ListContainer, Title } from "./Bestsellers.styles";
 import { useEffect, useState } from "react";
 
+// The most important and complex component in the app
+// It fetches data from the NYT API and renders a list of books
+// It also renders a search bar and manages the search functionality
 const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
@@ -28,6 +31,8 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   const location = useLocation();
   const apiKey = import.meta.env.VITE_NYT_API_KEY;
 
+  // A function that matches the fetched books with the books in the favourites array
+  // and replaces the books in the fetched array with the books in the favourites array
   const matchWithFavorites = (arr: Book[], favArr: Book[]) => {
     return arr.reduce((acc: Book[], book: Book) => {
       const match = favArr.find((el) => el.title === book.title);
@@ -48,6 +53,11 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
           throw new Error("Error fetching data");
         }
 
+        // The received data is quite large and cluttered so I used number of steps to clean it up
+        // 1. I reduced the data to an array of books objects
+        // There list contains a list of genera and each genre contains a list of books
+        // I reduced the books from all the places to one single array
+        // Also each book object contains data that I don't need so I reduced it to only the data I need
         const reducedData = data.results.lists.reduce(
           (acc1: Book[], list: List) => {
             const books = list.books.reduce(
@@ -81,6 +91,8 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
           []
         );
 
+        // 2. I removed the duplicates from the array
+        // Some books are listed in multiple genres so I removed them
         const removedDuplicates = reducedData.reduce(
           (acc: Book[], el: Book) => {
             if (!acc.find((item) => item.title === el.title)) {
@@ -91,6 +103,8 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
           []
         );
 
+        // 3. I matched the books with the books in the favourites array
+        // and replaced the books in the fetched array with the books in the favourites array (if any)
         setBooks(matchWithFavorites(removedDuplicates, favourites));
       } catch (error) {
         console.log(error);
@@ -98,17 +112,25 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
     };
 
     setSearchTerm("");
+    // calls the fetchData function
     fetchData();
   }, []);
 
+  // when books are updated this useEffect is triggered
   useEffect(() => {
+    // I used this method to set searchTerm with the location state only when coming from the landing page
     if (location.key !== locationKey) {
       setSearchTerm(location.state?.searchTerm ?? "");
       setLocationKey(location.key ?? "");
     }
   }, [books]);
 
+  // searchTerm is not always updated in the useEffect above
+  // so this useEffect is triggered when searchTerm is updated or when books are updated
+  // and books are in the first useEffect above
+  // btw. I placed them in the order as they are triggered for better readability
   useEffect(() => {
+    // this handles the search functionality
     if (searchTerm.length && books.length) {
       const filteredBooks = books.filter((book) =>
         book.title.toLowerCase().includes(searchTerm)
@@ -121,6 +143,8 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
     }
   }, [books, searchTerm]);
 
+  // when favourites are updated this useEffect is triggered
+  // that way I can see the changes in the favourite button
   useEffect(() => {
     setFilteredBooks(matchWithFavorites(filteredBooks, favourites));
   }, [favourites]);

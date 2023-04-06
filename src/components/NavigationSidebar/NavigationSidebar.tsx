@@ -9,6 +9,9 @@ import {
   StyledLink
 } from "./NavigationSidebar.styles";
 
+// A component that renders navigation buttons
+// The buttons are rendered based on the navigationLinks array
+// The buttons are rendered as active if the current location matches the path of the button
 const NavigationSidebar = () => {
   const location = useLocation();
 

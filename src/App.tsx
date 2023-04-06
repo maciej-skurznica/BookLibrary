@@ -3,16 +3,18 @@ import { GlobalStyle } from "src/styles/global";
 import { primaryTheme } from "src/styles/themes";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { ThemeProvider } from "styled-components";
-import { useState } from "react";
+import useLocalStorageAndState from "./hooks/useLocalStorageAndState";
 import { Bestsellers, Favourites, Landing, Sidebar } from "src/components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  const [favourites, setFavourites] = useState<Book[]>([]);
-  //local storage
+  const [favourites, setFavourites] = useLocalStorageAndState(
+    "favourites",
+    [] as Book[]
+  );
 
   const handleFavourites = (book: Book) => {
-    const isInArr = favourites.find((el) => el.title === book.title);
+    const isInArr = favourites.find((el: Book) => el.title === book.title);
     setFavourites(
       !isInArr
         ? [...favourites, { ...book, isFavorite: !book.isFavorite }]

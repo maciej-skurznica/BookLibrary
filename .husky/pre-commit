@@ -2,3 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npm run lint:staged
+# created this pre-cmmit hook to help me with linting my code before commiting
+# lint-staged is a tool that helps you to run linters on git staged files and not on all files

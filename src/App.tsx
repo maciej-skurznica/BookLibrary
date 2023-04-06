@@ -4,7 +4,13 @@ import { primaryTheme } from "src/styles/themes";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { ThemeProvider } from "styled-components";
 import useLocalStorageAndState from "./hooks/useLocalStorageAndState";
-import { Bestsellers, Favourites, Landing, Sidebar } from "src/components";
+import {
+  Bestsellers,
+  Favourites,
+  Landing,
+  Sidebar,
+  UpdateBook
+} from "src/components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -47,6 +53,10 @@ function App() {
                     favourites={favourites}
                   />
                 }
+              />
+              <Route
+                path="/favourites/:title"
+                element={<UpdateBook favourites={favourites} />}
               />
             </Routes>
           </Sidebar>

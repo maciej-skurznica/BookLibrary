@@ -15,11 +15,14 @@ import {
 } from "./Landing.styles";
 import { useEffect, useState } from "react";
 
+// Landing page component
+// Fetches random photos from Pexels API
 const Landing = () => {
   const [booksPhotos, setBooksPhotos] = useState<BookPhotos[]>([]);
   const apiKey = import.meta.env.VITE_PEXELS_API_KEY;
   const numberOfFetchedPhotos = 80;
 
+  // Fetch photos from Pexels API
   useEffect(() => {
     const fetchBooksPhotos = async () => {
       try {
@@ -28,10 +31,14 @@ const Landing = () => {
           { headers: { Authorization: apiKey } }
         );
 
+        // I am only interested in 200 status so I throw an error if it is not 200
         if (status !== 200) {
           throw new Error("Error fetching photos");
         }
 
+        // I fetch 80 photos but I only need 6 of them
+        // I generate 6 random numbers from 0 to 79
+        // Then I create a trimmed array of 6 photos
         const arr = generateRandomNumbers(6, 0, numberOfFetchedPhotos - 1);
         const randomPhotos = arr.reduce((acc: BookPhotos[], el) => {
           const url = data.photos[el].src.landscape;
@@ -43,6 +50,7 @@ const Landing = () => {
         console.log(error);
       }
     };
+    // Delay fetching photos to avoid Skeleton component flashing
     setTimeout(() => fetchBooksPhotos(), 400);
   }, []);
 

@@ -1,3 +1,4 @@
+// This file is used to export all components from a single file
 export { default as Landing } from "./Landing";
 export { default as Sidebar } from "./Sidebar";
 export { default as NavigationSidebar } from "./NavigationSidebar";

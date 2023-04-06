@@ -14,6 +14,9 @@ import {
 } from "./ListItem.styles";
 
 const ListItem = ({ book, handleClick, insideFav }: ListItemProps) => {
+  // I the design, the order of the elements is different in the two cases, so I've created a default and a fav object.
+  // I've used the insideFav prop to decide which object to use.
+  // So if this ListItem is inside the Favourites page, it will use the fav object, otherwise it will use the default object.
   const elements = {
     default: (
       <>

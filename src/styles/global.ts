@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle<{
+  // Define the theme type
   theme: {
     bgGrey: string;
     teal: string;
@@ -18,6 +19,7 @@ export const GlobalStyle = createGlobalStyle<{
     font-family: "Lato", sans-serif;
   }
 
+  /* This is the most usable setting for all the divs I use */
   div {
     display: flex;
     box-sizing: border-box;

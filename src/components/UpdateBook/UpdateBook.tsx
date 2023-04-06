@@ -17,10 +17,13 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateBook = ({ favourites, handleFavUpdate }: UpdateBookProps) => {
+  // To get the single book I used this approach in this case
   const { title } = useParams();
   const book = favourites.find((el) => el.title === title);
+  // ↑
   const [rating, setRating] = useState<number>(book?.rating || 0);
   const [price, setPrice] = useState<string>(book?.price || "");
+  // this is later used to navigate back to the favourites page
   const navigate = useNavigate();
 
   const handleRating = (rating: number) => setRating(rating);

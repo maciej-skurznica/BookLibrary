@@ -1,3 +1,4 @@
+// I need to generate a random numbers between 2 and 18 so I created this reusable function
 function generateRandomNumbers(
   length: number,
   from: number,

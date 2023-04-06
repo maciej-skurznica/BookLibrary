@@ -15,12 +15,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { darkTheme, primaryTheme } from "src/styles/themes";
 
 function App() {
+  // used custom hook to store theme and favourites in local storage so they persist on refresh
   const [theme, setTheme] = useLocalStorageAndState("theme", false);
   const [favourites, setFavourites] = useLocalStorageAndState(
     "favourites",
     [] as Book[]
   );
 
+  // used to add or remove a book from favourites
   const handleFavourites = (book: Book) => {
     const isInArr = favourites.find((el: Book) => el.title === book.title);
     setFavourites(
@@ -30,6 +32,7 @@ function App() {
     );
   };
 
+  // used to update the rating and price of a book in favourites
   const handleFavUpdate = (book: Book) => {
     const updated = [...favourites].map((el) =>
       el.title === book.title ? { ...el, ...book } : el

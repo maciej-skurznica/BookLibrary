@@ -1,3 +1,4 @@
+// edited the bootstrap file to be able to use absolute paths
 {
   "compilerOptions": {
     "target": "ESNext",

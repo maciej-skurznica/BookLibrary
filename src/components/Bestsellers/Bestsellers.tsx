@@ -43,10 +43,13 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   const handleSearch = (value: string) => setSearchTerm(value);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const controller = new AbortController();
+    const { signal } = controller;
+    const fetchData = async (signal: AbortSignal) => {
       try {
         const { data, status } = await axios(
-          `https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${apiKey}`
+          `https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${apiKey}`,
+          { signal }
         );
 
         if (status !== 200) {
@@ -107,13 +110,18 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
         // and replaced the books in the fetched array with the books in the favourites array (if any)
         setBooks(matchWithFavorites(removedDuplicates, favourites));
       } catch (error) {
-        console.log(error);
+        if (axios.isCancel(error))
+          return console.log("Request canceled:", error.message);
+        else console.log(error);
       }
     };
 
     setSearchTerm("");
     // calls the fetchData function
-    fetchData();
+    fetchData(signal);
+
+    // aborts the fetch request if the component is unmounted
+    return () => controller.abort();
   }, []);
 
   // when books are updated this useEffect is triggered

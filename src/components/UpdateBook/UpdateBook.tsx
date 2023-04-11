@@ -33,6 +33,7 @@ const UpdateBook = ({ favourites, handleFavUpdate }: UpdateBookProps) => {
   };
 
   const handleSubmit = () => {
+    alert("Book updated!");
     handleFavUpdate({ ...book, rating, price } as Book);
   };
 

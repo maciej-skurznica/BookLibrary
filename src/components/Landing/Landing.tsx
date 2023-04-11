@@ -24,11 +24,13 @@ const Landing = () => {
 
   // Fetch photos from Pexels API
   useEffect(() => {
-    const fetchBooksPhotos = async () => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const fetchBooksPhotos = async (signal: AbortSignal) => {
       try {
         const { data, status } = await axios(
           `https://api.pexels.com/v1/search?query=Books&orientation=landscape&size=small&per_page=${numberOfFetchedPhotos}`,
-          { headers: { Authorization: apiKey } }
+          { headers: { Authorization: apiKey }, signal }
         );
 
         // I am only interested in 200 status so I throw an error if it is not 200
@@ -47,11 +49,18 @@ const Landing = () => {
         }, []);
         setBooksPhotos(randomPhotos);
       } catch (error) {
-        console.log(error);
+        if (axios.isCancel(error))
+          console.log("Request canceled:", error.message);
+        else console.log(error);
       }
     };
     // Delay fetching photos to avoid Skeleton component flashing
-    setTimeout(() => fetchBooksPhotos(), 400);
+    const fetchTimer = setTimeout(() => fetchBooksPhotos(signal), 400);
+    // Abort fetch if the component unmounts
+    return () => {
+      clearTimeout(fetchTimer);
+      controller.abort();
+    };
   }, []);
 
   return (

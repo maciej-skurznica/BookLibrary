@@ -11,4 +11,12 @@ export const ThemeButton = styled.button`
   line-height: 20px;
   color: ${({ theme }) => theme.white};
   cursor: pointer;
+
+  :hover {
+    box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  :active {
+    box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.24);
+  }
 `;

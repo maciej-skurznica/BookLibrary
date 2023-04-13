@@ -21,7 +21,9 @@ const NavigationSidebar = () => {
         {navigationLinks.map(({ path, icon }) => (
           <LinkTile key={path}>
             <OuterDiv isActive={location.pathname === path}>
-              <StyledLink to={path}>{icon}</StyledLink>
+              <StyledLink to={path} data-testid={path}>
+                {icon}
+              </StyledLink>
             </OuterDiv>
             <SeparatorIcon />
           </LinkTile>

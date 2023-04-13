@@ -15,6 +15,7 @@ const Rating = ({ rating, handleRating }: RatingProps) => {
             filled={index < rating}
             disabled={handleRating === undefined}
             onClick={handleRating ? () => handleRating(index + 1) : undefined}
+            data-testid="star"
           >
             <StarIcon />
           </OuterDiv>

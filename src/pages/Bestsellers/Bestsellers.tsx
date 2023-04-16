@@ -132,29 +132,21 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
     return () => controller.abort();
   }, []);
 
-  // searchTerm is not always updated in the useEffect above
-  // so this useEffect is triggered when searchTerm is updated or when books are updated
-  // and books are in the first useEffect above
-  // btw. I placed them in the order as they are triggered for better readability
   useEffect(() => {
     // this handles the search functionality
     if (searchTerm.length && books.length) {
       const filteredBooks = books.filter((book) =>
         book.title.toLowerCase().includes(searchTerm)
       );
-      const notFound = filteredBooks.length === 0;
-      setNotFound(notFound);
-      setFilteredBooks(matchWithFavorites(filteredBooks, favourites));
-    } else {
-      setFilteredBooks(books);
+      !filteredBooks.length && setNotFound(true);
+      filteredBooks.length &&
+        setFilteredBooks(matchWithFavorites(filteredBooks, favourites));
     }
-  }, [books, searchTerm]);
-
-  // when favourites are updated this useEffect is triggered
-  // that way I can see the changes in the favourite button
-  useEffect(() => {
-    setFilteredBooks(matchWithFavorites(filteredBooks, favourites));
-  }, [favourites]);
+    // this handles books being loaded, searchBar(searchTerm) reset and favourites being updated
+    else if (books.length) {
+      setFilteredBooks(matchWithFavorites(books, favourites));
+    }
+  }, [books, favourites, searchTerm]);
 
   return (
     <Container>
@@ -174,6 +166,7 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
           ))
         ) : (
           Array.from({ length: 10 }).map((_, i) => (
+            // used index as key because this is only a skeleton and no item will be changed or removed from the list
             <Skeleton key={i} height={"52px"} />
           ))
         )}

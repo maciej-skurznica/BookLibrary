@@ -3,7 +3,7 @@ import { GlobalStyle } from "src/styles/global";
 import Settings from "./components/Settings/Settings";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { ThemeProvider } from "styled-components";
-import useLocalStorageAndState from "./hooks/useLocalStorageAndState";
+import useLocalState from "src/hooks/useLocalState";
 import {
   Bestsellers,
   Favourites,
@@ -16,11 +16,8 @@ import { darkTheme, primaryTheme } from "src/styles/themes";
 
 function App() {
   // used custom hook to store theme and favourites in local storage so they persist on refresh
-  const [theme, setTheme] = useLocalStorageAndState("theme", false);
-  const [favourites, setFavourites] = useLocalStorageAndState(
-    "favourites",
-    [] as Book[]
-  );
+  const [theme, setTheme] = useLocalState("theme", false);
+  const [favourites, setFavourites] = useLocalState("favourites", [] as Book[]);
 
   // used to add or remove a book from favourites
   const handleFavourites = (book: Book) => {

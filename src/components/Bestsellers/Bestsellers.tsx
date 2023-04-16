@@ -5,7 +5,7 @@ import randNumAsStr from "src/utils/randNumAsStr";
 import randomNumber from "src/utils/randomNumber";
 import SearchBar from "src/components/SearchBar";
 import Skeleton from "react-loading-skeleton";
-import useLocalStorageAndState from "src/hooks/useLocalStorageAndState";
+import useLocalState from "src/hooks/useLocalState";
 import { useLocation } from "react-router-dom";
 import {
   BestsellersProps,
@@ -24,10 +24,7 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
-  const [locationKey, setLocationKey] = useLocalStorageAndState(
-    "locationKey",
-    ""
-  );
+  const [locationKey, setLocationKey] = useLocalState("locationKey", "");
   const location = useLocation();
   const apiKey = import.meta.env.VITE_NYT_API_KEY;
 

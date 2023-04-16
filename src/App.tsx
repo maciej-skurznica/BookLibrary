@@ -1,16 +1,11 @@
-import { Book } from "./components/Bestsellers/Bestsellers.interfaces";
+import { Book } from "./pages/Bestsellers/Bestsellers.interfaces";
 import { GlobalStyle } from "src/styles/global";
-import Settings from "./components/Settings/Settings";
+import Settings from "./pages/Settings/Settings";
+import { Sidebar } from "src/components";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { ThemeProvider } from "styled-components";
 import useLocalState from "src/hooks/useLocalState";
-import {
-  Bestsellers,
-  Favourites,
-  Landing,
-  Sidebar,
-  UpdateBook
-} from "src/components";
+import { Bestsellers, Favourites, Landing, UpdateBook } from "src/pages";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { darkTheme, primaryTheme } from "src/styles/themes";
 

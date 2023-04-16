@@ -1,4 +1,4 @@
-import { Book } from "src/components/Bestsellers/Bestsellers.interfaces";
+import { Book } from "src/pages/Bestsellers/Bestsellers.interfaces";
 import { useState } from "react";
 
 // This hook is a combination of useState and localStorage in one.

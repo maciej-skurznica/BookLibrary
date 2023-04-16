@@ -16,7 +16,9 @@ import {
 import { Container, ListContainer, Title } from "./Bestsellers.styles";
 import { useEffect, useState } from "react";
 
-// The most important and complex component in the app
+const apiKey = import.meta.env.VITE_NYT_API_KEY;
+
+// The most important and complex page component in the app
 // It fetches data from the NYT API and renders a list of books
 // It also renders a search bar and manages the search functionality
 const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
@@ -24,9 +26,8 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
-  const [locationKey, setLocationKey] = useLocalState("locationKey", "");
-  const location = useLocation();
-  const apiKey = import.meta.env.VITE_NYT_API_KEY;
+  const [prevKey, setPrevKey] = useLocalState("prevKey", "");
+  const { key: locationKey, state: locationState } = useLocation();
 
   // A function that matches the fetched books with the books in the favourites array
   // and replaces the books in the fetched array with the books in the favourites array
@@ -38,6 +39,11 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   };
 
   const handleSearch = (value: string) => setSearchTerm(value);
+
+  const handleReset = () => {
+    setSearchTerm("");
+    setNotFound(false);
+  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -113,22 +119,18 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
       }
     };
 
-    setSearchTerm("");
     // calls the fetchData function
     fetchData(signal);
+    // If user submits a search in the landing page it is redirected to the this page
+    // I used this method to set searchTerm with the value that was entered in the landing page searchBar
+    if (locationKey && locationState?.searchTerm && locationKey !== prevKey) {
+      setSearchTerm(locationState.searchTerm);
+      setPrevKey(locationKey);
+    }
 
     // aborts the fetch request if the component is unmounted
     return () => controller.abort();
   }, []);
-
-  // when books are updated this useEffect is triggered
-  useEffect(() => {
-    // I used this method to set searchTerm with the location state only when coming from the landing page
-    if (location.key !== locationKey) {
-      setSearchTerm(location.state?.searchTerm ?? "");
-      setLocationKey(location.key ?? "");
-    }
-  }, [books]);
 
   // searchTerm is not always updated in the useEffect above
   // so this useEffect is triggered when searchTerm is updated or when books are updated
@@ -161,6 +163,7 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
         placeholder="Search"
         handleSearch={handleSearch}
         notFound={notFound}
+        handleReset={handleReset}
       />
       <ListContainer>
         {notFound ? (

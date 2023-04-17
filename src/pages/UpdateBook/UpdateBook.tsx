@@ -1,8 +1,7 @@
 import ArrowIcon from "src/assets/ArrowIcon";
 import { Book } from "src/pages/Bestsellers/Bestsellers.interfaces";
-import Rating from "src/components/Rating/Rating";
+import Rating from "src/components/Rating";
 import { UpdateBookProps } from "./UpdateBook.interfaces";
-import { useState } from "react";
 import {
   Button,
   Container,
@@ -14,6 +13,7 @@ import {
   Label,
   ReturnButton
 } from "./UpdateBook.styles";
+import { useCallback, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateBook = ({ favourites, handleFavUpdate }: UpdateBookProps) => {
@@ -26,7 +26,7 @@ const UpdateBook = ({ favourites, handleFavUpdate }: UpdateBookProps) => {
   // this is later used to navigate back to the favourites page
   const navigate = useNavigate();
 
-  const handleRating = (rating: number) => setRating(rating);
+  const handleRating = useCallback((rating: number) => setRating(rating), []);
 
   const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPrice(Number(e.target.value).toFixed(2));

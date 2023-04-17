@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 import { BestsellersProps, Book } from "./Bestsellers.interfaces";
 import { cleanBookData, mapWithFavourites } from "./Bestsellers.helpers";
 import { Container, ListContainer, Title } from "./Bestsellers.styles";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const apiKey = import.meta.env.VITE_NYT_API_KEY;
 
@@ -23,12 +23,20 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   const [prevKey, setPrevKey] = useLocalState("prevKey", "");
   const { key: locationKey, state: locationState } = useLocation();
 
-  const handleSearch = (value: string) => setSearchTerm(value);
+  // skips computing if dependencies haven't changed
+  const memoMapWithFavourites = useMemo(
+    () => mapWithFavourites(books, favourites),
+    [books, favourites]
+  );
 
-  const handleReset = () => {
+  // improves performance by memoizing the function so the SearchBar component doesn't re-render every time this component re-renders
+  const handleSearch = useCallback((value: string) => setSearchTerm(value), []);
+
+  // improves performance by memoizing the function so the SearchBar component doesn't re-render every time this component re-renders
+  const handleReset = useCallback(() => {
     setSearchTerm("");
     setNotFound(false);
-  };
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -47,6 +55,14 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
 
         const cleanedData = cleanBookData(data);
         const finalData = mapWithFavourites(cleanedData, favourites);
+
+        // I used this to set the date of the fetch and save books in localStorage
+        window.localStorage.setItem("books", JSON.stringify(finalData));
+        window.localStorage.setItem(
+          "prevDate",
+          new Date().toISOString().slice(0, 10)
+        );
+
         setBooks(finalData);
       } catch (error) {
         if (axios.isCancel(error))
@@ -55,8 +71,13 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
       }
     };
 
-    // calls the fetchData function
-    fetchData(signal);
+    // calls the fetchData function only if the date of the last fetch is not the same as the current date
+    // otherwise gets the books from localStorage
+    // books data doesn't change often so I used this to avoid unnecessary fetch requests
+    const prevDate = localStorage.getItem("prevDate");
+    const currentDate = new Date().toISOString().slice(0, 10);
+    if (prevDate !== currentDate) fetchData(signal);
+    else setBooks(JSON.parse(window.localStorage.getItem("books") ?? "[]"));
 
     // If user submits a search in the landing page it is redirected to the this page
     // I used this method to set searchTerm with the value that was entered in the landing page searchBar
@@ -81,7 +102,8 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
     }
     // this handles books being loaded, searchBar(searchTerm) reset and favourites being updated
     else if (books.length) {
-      setFilteredBooks(mapWithFavourites(books, favourites));
+      // used memoized value here to cover one edge case where the user searches for a book, it is not found and then user resets the search
+      setFilteredBooks(memoMapWithFavourites);
     }
   }, [books, favourites, searchTerm]);
 

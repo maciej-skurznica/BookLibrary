@@ -1,4 +1,4 @@
-import { Book } from "src/components/Bestsellers/Bestsellers.interfaces";
+import { Book } from "src/pages/Bestsellers/Bestsellers.interfaces";
 import { Empty } from "./Favourites.styles";
 import { FavouritesProps } from "./Favourites.interfaces";
 import ListItem from "src/components/ListItem";
@@ -7,7 +7,7 @@ import {
   Container,
   ListContainer,
   Title
-} from "src/components/Bestsellers/Bestsellers.styles";
+} from "src/pages/Bestsellers/Bestsellers.styles";
 import { useEffect, useState } from "react";
 
 const Favourites = ({ favourites, handleClick }: FavouritesProps) => {

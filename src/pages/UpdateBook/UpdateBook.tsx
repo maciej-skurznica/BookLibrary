@@ -1,5 +1,5 @@
 import ArrowIcon from "src/assets/ArrowIcon";
-import { Book } from "../Bestsellers/Bestsellers.interfaces";
+import { Book } from "src/pages/Bestsellers/Bestsellers.interfaces";
 import Rating from "src/components/Rating/Rating";
 import { UpdateBookProps } from "./UpdateBook.interfaces";
 import { useState } from "react";

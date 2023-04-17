@@ -55,6 +55,14 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
 
         const cleanedData = cleanBookData(data);
         const finalData = mapWithFavourites(cleanedData, favourites);
+
+        // I used this to set the date of the fetch and save books in localStorage
+        window.localStorage.setItem("books", JSON.stringify(finalData));
+        window.localStorage.setItem(
+          "prevDate",
+          new Date().toISOString().slice(0, 10)
+        );
+
         setBooks(finalData);
       } catch (error) {
         if (axios.isCancel(error))
@@ -63,8 +71,13 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
       }
     };
 
-    // calls the fetchData function
-    fetchData(signal);
+    // calls the fetchData function only if the date of the last fetch is not the same as the current date
+    // otherwise gets the books from localStorage
+    // books data doesn't change often so I used this to avoid unnecessary fetch requests
+    const prevDate = localStorage.getItem("prevDate");
+    const currentDate = new Date().toISOString().slice(0, 10);
+    if (prevDate !== currentDate) fetchData(signal);
+    else setBooks(JSON.parse(window.localStorage.getItem("books") ?? "[]"));
 
     // If user submits a search in the landing page it is redirected to the this page
     // I used this method to set searchTerm with the value that was entered in the landing page searchBar

@@ -70,7 +70,11 @@ const SearchBar = React.memo(
             valid={valid}
           />
           {handleReset && (
-            <ResetButton onClick={handleReset} type="reset">
+            <ResetButton
+              onClick={handleReset}
+              type="reset"
+              data-testid={"reset"}
+            >
               <RestartIcon />
             </ResetButton>
           )}

@@ -48,7 +48,11 @@ const ListItem = React.memo(
           </a>
         </TitleText>
         {insideFav ? elements.fav : elements.default}
-        <FavButton isFav={book.isFavorite} onClick={() => handleClick(book)}>
+        <FavButton
+          isFav={book.isFavorite}
+          onClick={() => handleClick(book)}
+          data-testid={"fav-button"}
+        >
           <HeartIcon />
         </FavButton>
       </Container>

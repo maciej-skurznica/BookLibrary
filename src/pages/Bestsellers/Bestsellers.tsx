@@ -126,7 +126,7 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
         ) : (
           Array.from({ length: 10 }).map((_, i) => (
             // used index as key because this is only a skeleton and no item will be changed or removed from the list
-            <Skeleton key={i} height={"52px"} />
+            <Skeleton key={i} height={"52px"} data-testid="skeleton" />
           ))
         )}
       </ListContainer>

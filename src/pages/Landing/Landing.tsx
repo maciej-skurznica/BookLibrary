@@ -78,7 +78,7 @@ const Landing = () => {
               : Array(3)
                   .fill(0)
                   .map((_, i) => (
-                    <SkeletonBox key={i}>
+                    <SkeletonBox key={i} data-testid={"skeleton-box"}>
                       <Skeleton borderRadius={8} height={"100%"} duration={3} />
                     </SkeletonBox>
                   ))}
@@ -95,7 +95,7 @@ const Landing = () => {
               : Array(3)
                   .fill(0)
                   .map((_, i) => (
-                    <SkeletonBox key={i}>
+                    <SkeletonBox key={i} data-testid={"skeleton-box"}>
                       <Skeleton borderRadius={8} height={"100%"} />
                     </SkeletonBox>
                   ))}

@@ -56,6 +56,7 @@ const Favourites = ({ favourites, handleClick }: FavouritesProps) => {
               book={book}
               handleClick={handleClick}
               insideFav
+              data-testid={book.title}
             />
           ))
         ) : (

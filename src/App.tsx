@@ -29,14 +29,17 @@ function App() {
   );
 
   // used to update the rating and price of a book in favourites
-  const handleFavUpdate = (book: Book) => {
-    const updated = [...favourites].map((el) =>
-      el.title === book.title ? { ...el, ...book } : el
-    );
-    setFavourites(updated);
-  };
+  const handleFavUpdate = useCallback(
+    (book: Book) => {
+      const updated = [...favourites].map((el) =>
+        el.title === book.title ? { ...el, ...book } : el
+      );
+      setFavourites(updated);
+    },
+    [favourites]
+  );
 
-  const handleTheme = () => setTheme(!theme);
+  const handleTheme = useCallback(() => setTheme(!theme), []);
 
   return (
     <ThemeProvider theme={theme ? darkTheme : primaryTheme}>

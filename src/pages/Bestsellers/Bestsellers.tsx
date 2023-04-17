@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 import { BestsellersProps, Book } from "./Bestsellers.interfaces";
 import { cleanBookData, mapWithFavourites } from "./Bestsellers.helpers";
 import { Container, ListContainer, Title } from "./Bestsellers.styles";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const apiKey = import.meta.env.VITE_NYT_API_KEY;
 
@@ -23,12 +23,14 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   const [prevKey, setPrevKey] = useLocalState("prevKey", "");
   const { key: locationKey, state: locationState } = useLocation();
 
-  const handleSearch = (value: string) => setSearchTerm(value);
+  // improves performance by memoizing the function so the SearchBar component doesn't re-render every time this component re-renders
+  const handleSearch = useCallback((value: string) => setSearchTerm(value), []);
 
-  const handleReset = () => {
+  // improves performance by memoizing the function so the SearchBar component doesn't re-render every time this component re-renders
+  const handleReset = useCallback(() => {
     setSearchTerm("");
     setNotFound(false);
-  };
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();

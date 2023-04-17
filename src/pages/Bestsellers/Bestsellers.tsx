@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 import { BestsellersProps, Book } from "./Bestsellers.interfaces";
 import { cleanBookData, mapWithFavourites } from "./Bestsellers.helpers";
 import { Container, ListContainer, Title } from "./Bestsellers.styles";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const apiKey = import.meta.env.VITE_NYT_API_KEY;
 
@@ -22,6 +22,12 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
   const [notFound, setNotFound] = useState<boolean>(false);
   const [prevKey, setPrevKey] = useLocalState("prevKey", "");
   const { key: locationKey, state: locationState } = useLocation();
+
+  // skips computing if dependencies haven't changed
+  const memoMapWithFavourites = useMemo(
+    () => mapWithFavourites(books, favourites),
+    [books, favourites]
+  );
 
   // improves performance by memoizing the function so the SearchBar component doesn't re-render every time this component re-renders
   const handleSearch = useCallback((value: string) => setSearchTerm(value), []);
@@ -83,7 +89,8 @@ const Bestsellers = ({ handleClick, favourites }: BestsellersProps) => {
     }
     // this handles books being loaded, searchBar(searchTerm) reset and favourites being updated
     else if (books.length) {
-      setFilteredBooks(mapWithFavourites(books, favourites));
+      // used memoized value here to cover one edge case where the user searches for a book, it is not found and then user resets the search
+      setFilteredBooks(memoMapWithFavourites);
     }
   }, [books, favourites, searchTerm]);
 

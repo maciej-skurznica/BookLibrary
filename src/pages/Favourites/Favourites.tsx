@@ -8,19 +8,21 @@ import {
   ListContainer,
   Title
 } from "src/pages/Bestsellers/Bestsellers.styles";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const Favourites = ({ favourites, handleClick }: FavouritesProps) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
   const [filteredFav, setFilteredFav] = useState<Book[]>([]);
 
-  const handleSearch = (value: string) => setSearchTerm(value);
+  // improves performance by memoizing the function so the SearchBar component doesn't re-render every time this component re-renders
+  const handleSearch = useCallback((value: string) => setSearchTerm(value), []);
 
-  const handleReset = () => {
+  // improves performance by memoizing the function so the SearchBar component doesn't re-render every time this component re-renders
+  const handleReset = useCallback(() => {
     setSearchTerm("");
     setNotFound(false);
-  };
+  }, []);
 
   // A function that filters the favourites array based on the search term
   useEffect(() => {
